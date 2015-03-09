@@ -1,11 +1,13 @@
 package net.gogo98901.pong.mob;
 
 import java.awt.Graphics;
+import java.util.Random;
 
 import net.gogo98901.pong.Pong;
 
 public abstract class Mob {
 
+	protected final Random rand = new Random();
 	protected int x, y;
 	protected Pong pong;
 

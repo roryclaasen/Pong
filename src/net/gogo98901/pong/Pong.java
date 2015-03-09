@@ -6,26 +6,38 @@ import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
 
 import net.gogo98901.Bootstrap;
-import net.gogo98901.pong.player.Players;
+import net.gogo98901.pong.handler.Handler;
+import net.gogo98901.pong.mob.Ball;
+import net.gogo98901.pong.mob.player.Players;
+import net.gogo98901.util.GOLog;
 
 public class Pong extends Canvas implements Runnable {
 	private static final long serialVersionUID = 1L;
 
 	private boolean running = false;
-	private Thread _t;
 
+	private Thread _t;
+	private Pong pong;
+	
+	public Handler handler;
+	public Players players;
+	public Ball ball;
+
+	private int mode = 0;
 	private int width, height;
-	private Players players;
 
 	private int fps, ups;
 
 	public Pong() {
+		pong = this;
 		width = (int) Math.ceil(Bootstrap.getFrame().getSize().getWidth());
 		height = (int) Math.ceil(Bootstrap.getFrame().getSize().getHeight());
 	}
 
 	private void init() {
-		players = new Players();
+		handler = new Handler(pong);
+		players = new Players(pong);
+		ball = new Ball(pong);
 	}
 
 	public void start() {
@@ -75,7 +87,9 @@ public class Pong extends Canvas implements Runnable {
 	}
 
 	private void update() {
+		handler.update();
 		players.update();
+		ball.update();
 	}
 
 	public void render() {
@@ -86,16 +100,31 @@ public class Pong extends Canvas implements Runnable {
 				return;
 			}
 			Graphics g = bs.getDrawGraphics();
-			g.setColor(Color.BLACK);
+			g.setColor(getColors()[0]);
 			g.fillRect(0, 0, width, height);
-			g.setColor(Color.WHITE);
+			g.setColor(getColors()[1]);
 			g.drawString("fps: " + fps, 2, 10);
 			g.drawString("ups: " + ups, 2, 21);
 			players.render(g);
+			ball.render(g);
 			g.dispose();
 			bs.show();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+	public Color[] getColors() {
+		Color[] c = new Color[2];
+		if (mode == 0) {
+			c[0] = Color.BLACK;
+			c[1] = Color.WHITE;
+		}
+		return c;
+	}
+
+	public static void close() {
+		GOLog.off("Shutting down Pong");
+		System.exit(0);
 	}
 }

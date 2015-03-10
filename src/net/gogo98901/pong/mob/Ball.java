@@ -17,8 +17,10 @@ public class Ball extends Mob {
 
 	private int size = 19;
 
-	private int dir, yAngle;
-	private int speed = 2;
+	private int yAngle;
+	private int speed = 4;
+
+	private double startX, startY;
 
 	public Ball(Pong pong) {
 		super(pong);
@@ -33,28 +35,24 @@ public class Ball extends Mob {
 			if (pong.handler.keyboard.space) {
 				currentMode = mode.FLYING;
 				GOLog.info("Ball rleased");
-				dir = rand.nextInt(2);
 				yAngle = rand.nextInt(360);
-				if (yAngle > 90 - 20 && yAngle < 90 + 20) yAngle += rand.nextInt(90);
-				if (yAngle > 270 - 20 && yAngle < 270 + 20) yAngle += rand.nextInt(90);
+				recalculate();
 			}
 		}
 		if (currentMode == mode.FLYING) {
-			if (dir == 0) x -= speed;
-			if (dir == 1) x += speed;
-			if (y <= 10 && dir == 0) yAngle = yAngle + 360;
-			if (y <= 10 && dir == 1) yAngle = yAngle - 540;
-			if (y >= pong.getHeight() - 10) yAngle = yAngle - 180;
 			double dy = speed * Math.sin(yAngle);
-			GOLog.info("a:" + yAngle + ", y:" + y);
-			y += (int) Math.floor(dy);
+			y += dy;
+			if (dy < 0) x -= speed;
+			if (dy > 0) x += speed;
+			GOLog.info("" + yAngle);
+			if (y - (getSize() / 2) <= 1) yAngle = -(yAngle/2);
+			if (y + (getSize() / 2) >= pong.getHeight() - 1) yAngle = -(yAngle/2);
 			Player p;
 			if (isLeft()) {
 				p = pong.players.getPlayers()[0];
-				if (x <= p.getX() + p.getWidth()) {
-					if (y >= p.getY() - p.getHeightHalf() && y <= p.getY() + p.getHeightHalf()) {
-						if (dir == 1) dir = 0;
-						else dir = 1;
+				if (x + (getSize() / 2) <= p.getX() + p.getWidth()) {
+					if (y + (getSize() / 2) >= p.getY() - p.getHeightHalf() && y - (getSize() / 2) <= p.getY() + p.getHeightHalf()) {
+						recalculate();
 					}
 				}
 				if (x <= p.getGoal()) {
@@ -65,9 +63,8 @@ public class Ball extends Mob {
 			if (isRight()) {
 				p = pong.players.getPlayers()[1];
 				if (x >= p.getX() - p.getWidth()) {
-					if (y >= p.getY() - p.getHeightHalf() && y <= p.getY() + p.getHeightHalf()) {
-						if (dir == 1) dir = 0;
-						else dir = 1;
+					if (y + (getSize() / 2) >= p.getY() - p.getHeightHalf() && y - (getSize() / 2) <= p.getY() + p.getHeightHalf()) {
+						recalculate();
 					}
 				}
 				if (x >= p.getGoal()) {
@@ -83,18 +80,27 @@ public class Ball extends Mob {
 			Data.centerText(0, 0, pong.getWidth(), pong.getHeight(), "Press space to start", g, pong.font.deriveFont(25F));
 		}
 		if (currentMode == mode.FLYING) {
-			g.fillOval(x - (size / 2), y - (size / 2), size, size);
+			g.fillOval((int) x - (size / 2), (int) y - (size / 2), size, size);
 		}
 		// g.drawLine(0, 10, pong.getWidth(), 10);
 		// g.drawLine(0, pong.getHeight() - 10, pong.getWidth(), pong.getHeight() - 10);
 	}
 
+	private void setPosition() {
+		startX = x;
+		startY = y;
+	}
+
+	private void recalculate() {
+		setPosition();
+	}
+
 	public int getXLeft() {
-		return x - (size / 2);
+		return (int) x - (size / 2);
 	}
 
 	public int getXRight() {
-		return x + (size / 2);
+		return (int) x + (size / 2);
 	}
 
 	public int getSize() {
@@ -107,7 +113,7 @@ public class Ball extends Mob {
 			currentMode = mode.START;
 			x = pong.getWidth() / 2;
 			y = pong.getHeight() / 2;
-			dir = 0;
+			setPosition();
 		}
 	}
 

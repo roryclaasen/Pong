@@ -8,7 +8,7 @@ import net.gogo98901.pong.Pong;
 public abstract class Mob {
 
 	protected final Random rand = new Random();
-	protected int x, y;
+	protected double x, y;
 	protected Pong pong;
 
 	public Mob(Pong pong) {
@@ -18,19 +18,19 @@ public abstract class Mob {
 	public abstract void update();
 	public abstract void render(Graphics g);
 
-	public void setX(int x) {
+	public void setX(double x) {
 		this.x = x;
 	}
 
-	public void setY(int y) {
+	public void setY(double y) {
 		this.y = y;
 	}
 
-	public int getX() {
+	public double getX() {
 		return x;
 	}
 
-	public int getY() {
+	public double getY() {
 		return y;
 	}
 }

@@ -55,8 +55,8 @@ public class Player extends Mob {
 	}
 
 	public void render(Graphics g) {
-		// g.drawLine(getGoal(), 0, getGoal(), pong.getHeight());
-		g.fillRect(x - (width / 2), y - (height / 2), width, height);
+		g.fillRect((int) x - (width / 2), (int) y - (height / 2), width, height);
+		g.drawLine(getGoal(), 0, getGoal(), pong.getHeight());
 	}
 
 	public void reset() {
@@ -90,8 +90,8 @@ public class Player extends Mob {
 	}
 
 	public int getGoal() {
-		if (set == keySet.LEFT) return x - width;
-		if (set == keySet.RIGHT) return x + width;
+		if (set == keySet.LEFT) return (int) x - width;
+		if (set == keySet.RIGHT) return (int) x + width;
 		return 0;
 	}
 

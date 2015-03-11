@@ -1,15 +1,17 @@
 package net.gogo98901.pong.mob.player;
 
 import java.awt.Graphics;
+import java.util.ArrayList;
+import java.util.List;
 
 import net.gogo98901.pong.Pong;
 
 public class Players {
-	private Player player1, player2;
+	private List<Player> players = new ArrayList<Player>();
 
 	public Players(Pong pong) {
-		player1 = new Player(pong, Player.keySet.LEFT, 0);
-		player2 = new Player(pong, Player.keySet.RIGHT, 1);
+		players.add(new Player(pong, Player.keySet.LEFT, 0));
+		players.add(new Player(pong, Player.keySet.RIGHT, 1));
 	}
 
 	public void update() {
@@ -25,38 +27,46 @@ public class Players {
 	}
 
 	public void render(Graphics g) {
-		player1.render(g);
-		player2.render(g);
+		for (Player player : players) {
+			player.render(g);
+		}
 	}
-	
-	public void reset(){
-		player1.reset();
-		player2.reset();
+
+	public void reset() {
+		for (Player player : players) {
+			player.reset();
+		}
 	}
 
 	public void setLevel(int player, int level) {
-		if (player == 1) player1.setLevel(level);
-		if (player == 2) player2.setLevel(level);
+		players.get(player).setLevel(level);
 	}
 
-	public void setLevelBoth(int level) {
-		setLevel(1, level);
-		setLevel(2, level);
+	public void setLevelAll(int level) {
+		for (Player player : players) {
+			player.setLevel(level);
+		}
 	}
 
 	public Player[] getPlayers() {
-		Player[] p = new Player[2];
-		p[0] = player1;
-		p[1] = player2;
+		Player[] p = new Player[players.size()];
+		for (int i = 0; i < p.length; i++) {
+			p[i] = players.get(i);
+		}
 		return p;
 	}
 
 	public void renderScores(Graphics g) {
-		player1.renderScore(g);
-		player2.renderScore(g);
+		for (Player player : players) {
+			player.renderScore(g);
+		}
 	}
 
 	public int getScoreTotal() {
-		return player1.getScore() + player2.getScore();
+		int score = 0;
+		for (Player player : players) {
+			score += player.getScore();
+		}
+		return score;
 	}
 }

@@ -20,6 +20,7 @@ public class Pong extends Canvas implements Runnable {
 	private static final long serialVersionUID = 1L;
 
 	private boolean running = false;
+	public boolean debug = false;
 
 	private Thread _t;
 	private Pong pong;
@@ -38,9 +39,6 @@ public class Pong extends Canvas implements Runnable {
 		pong = this;
 		width = (int) Math.ceil(Bootstrap.getFrame().getSize().getWidth());
 		height = (int) Math.ceil(Bootstrap.getFrame().getSize().getHeight());
-	}
-
-	private void init() {
 		try {
 			InputStream fontData = Pong.class.getClassLoader().getResourceAsStream("assets/8-BIT WONDER.TTF");
 			font = Font.createFont(Font.TRUETYPE_FONT, fontData).deriveFont(Font.PLAIN, 12);
@@ -48,7 +46,9 @@ public class Pong extends Canvas implements Runnable {
 			GOLog.warn("Font not loaded");
 			e.printStackTrace();
 		}
+	}
 
+	private void init() {
 		handler = new Handler(pong);
 		players = new Players(pong);
 		ball = new Ball(pong);
@@ -116,6 +116,7 @@ public class Pong extends Canvas implements Runnable {
 		players.update();
 		ball.update();
 		if (handler.keyboard.esc) reset();
+		if (handler.keyboard.space) ball.start();
 	}
 
 	public void render() {
@@ -128,15 +129,18 @@ public class Pong extends Canvas implements Runnable {
 			Graphics g = bs.getDrawGraphics();
 			g.setColor(getColors()[0]);
 			g.fillRect(0, 0, width, height);
+
 			g.setColor(getColors()[1]);
-
 			g.setFont(font);
-			g.drawString("fps " + fps, 2, 15);
-			g.drawString("ups " + ups, 2, 30);
-
+			if (debug) {
+				g.drawString("fps " + fps, 2, 15);
+				g.drawString("ups " + ups, 2, 30);
+				g.drawString("sob " + (int) ball.getRallySpeed(), 2, 45);
+			}
 			if (ball.isStill()) {
 				players.renderScores(g);
 				Data.centerText(0, 0, width, 50, "Pong", g, font.deriveFont(50F));
+				Data.centerText(0, 0, pong.getWidth(), pong.getHeight(), "Press space to start", g, pong.font.deriveFont(25F));
 			}
 
 			players.render(g);
@@ -150,7 +154,7 @@ public class Pong extends Canvas implements Runnable {
 	}
 
 	public Color[] getColors() {
-		Color[] c = new Color[2];
+		Color[] c = new Color[5];
 		if (mode == 0) {
 			c[0] = Color.BLACK;
 			c[1] = Color.WHITE;

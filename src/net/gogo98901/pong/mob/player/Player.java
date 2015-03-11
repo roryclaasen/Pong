@@ -1,5 +1,6 @@
 package net.gogo98901.pong.mob.player;
 
+import java.awt.Color;
 import java.awt.Graphics;
 
 import net.gogo98901.pong.Pong;
@@ -9,15 +10,19 @@ import net.gogo98901.util.Data;
 import net.gogo98901.util.GOLog;
 
 public class Player extends Mob {
-	
-	private final int bound = 100, speed =5;
+
+	private final int bound = 100, speed = 5;
 	private int level = 12;
 	private int width = 10;
 	private int height = width * level;
-	
+
+	private int dir;
+
 	private int playerID;
 
 	private int score;
+
+	private boolean moving = false;
 
 	public enum keySet {
 		RIGHT, LEFT, ONLINE
@@ -34,18 +39,18 @@ public class Player extends Mob {
 			return;
 		}
 		this.set = set;
-		playerID = playerNumber
+		playerID = playerNumber;
 		y = pong.getHeight() / 2;
 		if (set == keySet.LEFT) x = bound;
 		if (set == keySet.RIGHT) x = pong.getWidth() - bound;
 	}
-	
+
 	public Player(Pong pong, keySet set) {
-		super(pong);
 		this(pong, set, -1);
 	}
 
 	public void update() {
+		moving = false;
 		if (!pong.ball.isStill()) {
 			if (set == keySet.LEFT) {
 				if (key.w) move(-1);
@@ -59,15 +64,17 @@ public class Player extends Mob {
 	}
 
 	private void move(int dir) {
-		if (dir == -1) if (y - (height / 2) - speed > 0) y -= speed;
-		if (dir == 1) if (y + (height / 2) + speed < pong.getHeight()) y += speed;
+		moving = true;
+		this.dir = dir;
+		if (dir == -1) if ((y - (height / 2)) - speed > 1) y -= speed;
+		if (dir == 1) if ((y + (height / 2)) + speed < pong.getHeight() - 1) y += speed;
 	}
 
 	public void render(Graphics g) {
 		g.setColor(getColor());
 		g.fillRect((int) x - (width / 2), (int) y - (height / 2), width, height);
 		g.drawLine(getGoal(), 0, getGoal(), pong.getHeight());
-		g.setColor(pong.getColors()[1];
+		g.setColor(pong.getColors()[1]);
 	}
 
 	public void reset() {
@@ -82,6 +89,20 @@ public class Player extends Mob {
 	public void setLevel(int level) {
 		this.level = level;
 		this.height = this.width * level;
+	}
+
+	public boolean isMoving() {
+		return moving;
+	}
+
+	public boolean isGoingDown() {
+		if (!isMoving()) return false;
+		return (dir == -1);
+	}
+
+	public boolean isGoingUp() {
+		if (!isMoving()) return false;
+		return (dir == 1);
 	}
 
 	public int getWidth() {
@@ -117,12 +138,12 @@ public class Player extends Mob {
 	public int getScore() {
 		return score;
 	}
-	
+
 	public Color getColor() {
 		Color color = Color.WHITE;
-		if(playerID != -1) {
+		if (playerID != -1) {
 			Color col = pong.getColors()[2 + playerID];
-			if(c != null) color = col;
+			if (col != null) color = col;
 		}
 		return color;
 	}

@@ -141,6 +141,12 @@ public class Pong extends Canvas implements Runnable {
 				players.renderScores(g);
 				Data.centerText(0, 0, width, 50, "Pong", g, font.deriveFont(50F));
 				Data.centerText(0, 0, pong.getWidth(), pong.getHeight(), "Press space to start", g, pong.font.deriveFont(25F));
+			}else{
+				if (players.getPlayers().length == 2) {
+					for (int i = 0; i < getHeight(); i++) {
+						if (i % 2 == 0) g.drawLine(getWidth() / 2, i * 10, getWidth() / 2, i * 10 + 10);
+					}
+				}
 			}
 
 			players.render(g);

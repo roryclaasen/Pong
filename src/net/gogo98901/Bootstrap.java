@@ -2,6 +2,7 @@ package net.gogo98901;
 
 import java.awt.Dimension;
 
+import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 
 import net.gogo98901.pong.Pong;
@@ -15,20 +16,25 @@ public class Bootstrap {
 		GOLog.init();
 		GOLog.info("Started Pong");
 
-		frame = new JFrame();
-		frame.setSize(new Dimension(700, 500));
-		frame.setResizable(false);
-		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-		frame.setLocationRelativeTo(null);
-		frame.setTitle("Pong");
+		try {
+			frame = new JFrame();
+			frame.setSize(new Dimension(700, 500));
+			frame.setResizable(false);
+			frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+			frame.setLocationRelativeTo(null);
+			frame.setIconImage(ImageIO.read(Pong.class.getClassLoader().getResourceAsStream("assets/icon.png")));
+			frame.setTitle("Pong");
 
-		pong = new Pong();
+			pong = new Pong();
 
-		frame.add(pong);
-		checkArgs(args);
+			frame.add(pong);
+			checkArgs(args);
 
-		frame.setVisible(true);
-		pong.start();
+			frame.setVisible(true);
+			pong.start();
+		} catch (Exception e) {
+			GOLog.severe(e);
+		}
 	}
 
 	public static JFrame getFrame() {

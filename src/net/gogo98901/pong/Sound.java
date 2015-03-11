@@ -25,10 +25,10 @@ public class Sound {
 
 	private Clip clip1, clip2, background1, background2;
 
-	private boolean success = false;
+	private boolean success = false, backgroundQ = false;
 
 	private int lastplayed;
-	
+
 	private float gain = -5F;
 
 	public Sound() {
@@ -53,8 +53,6 @@ public class Sound {
 	public void playBackground() {
 		try {
 			background1.open(intro);
-			FloatControl gainControl = (FloatControl) background1.getControl(FloatControl.Type.MASTER_GAIN);
-			gainControl.setValue(gain);
 			background1.start();
 		} catch (Exception e) {
 			GOLog.severe("Background: " + e);
@@ -67,11 +65,29 @@ public class Sound {
 			main = AudioSystem.getAudioInputStream(Sound.class.getClassLoader().getResource(back2));
 			background2 = AudioSystem.getClip();
 			background2.open(main);
-			FloatControl gainControl = (FloatControl) background2.getControl(FloatControl.Type.MASTER_GAIN);
-			gainControl.setValue(gain);
 			background2.loop(-1);
 		} catch (Exception e) {
 			GOLog.severe("Background: " + e);
+		}
+	}
+
+	private void quietBackground() {
+		if (!backgroundQ) {
+			backgroundQ = true;
+			try {
+				if (background1 != null) if (background1.isOpen()) {
+					FloatControl gainControl = (FloatControl) background1.getControl(FloatControl.Type.MASTER_GAIN);
+					gainControl.setValue(gain);
+				}
+
+				if (background2.isOpen()) {
+					FloatControl gainControl = (FloatControl) background2.getControl(FloatControl.Type.MASTER_GAIN);
+					gainControl.setValue(gain);
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+				GOLog.severe("Background: " + e);
+			}
 		}
 	}
 
@@ -85,6 +101,7 @@ public class Sound {
 		if (success) {
 			if (id == 1 || id == 2) {
 				try {
+					quietBackground();
 					reset(id);
 					if (id == 1) {
 						clip1.open(in1);

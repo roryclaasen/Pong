@@ -8,8 +8,8 @@ public class Players {
 	private Player player1, player2;
 
 	public Players(Pong pong) {
-		player1 = new Player(pong, Player.keySet.LEFT);
-		player2 = new Player(pong, Player.keySet.RIGHT);
+		player1 = new Player(pong, Player.keySet.LEFT, 0);
+		player2 = new Player(pong, Player.keySet.RIGHT, 1);
 	}
 
 	public void update() {

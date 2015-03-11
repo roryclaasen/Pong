@@ -154,6 +154,9 @@ public class Pong extends Canvas implements Runnable {
 		if (mode == 0) {
 			c[0] = Color.BLACK;
 			c[1] = Color.WHITE;
+			c[2] = Color.RED;
+			c[3] = Color.BLUE;
+			c[4] = Color.CYAN;
 		}
 		return c;
 	}

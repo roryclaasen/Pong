@@ -9,10 +9,13 @@ import net.gogo98901.util.Data;
 import net.gogo98901.util.GOLog;
 
 public class Player extends Mob {
+	
 	private final int bound = 100, speed =5;
 	private int level = 12;
 	private int width = 10;
 	private int height = width * level;
+	
+	private int playerID;
 
 	private int score;
 
@@ -23,7 +26,7 @@ public class Player extends Mob {
 	private Keyboard key;
 	private keySet set;
 
-	public Player(Pong pong, keySet set) {
+	public Player(Pong pong, keySet set, int playerNumber) {
 		super(pong);
 		key = pong.handler.keyboard;
 		if (set == null) {
@@ -31,9 +34,15 @@ public class Player extends Mob {
 			return;
 		}
 		this.set = set;
+		playerID = playerNumber
 		y = pong.getHeight() / 2;
 		if (set == keySet.LEFT) x = bound;
 		if (set == keySet.RIGHT) x = pong.getWidth() - bound;
+	}
+	
+	public Player(Pong pong, keySet set) {
+		super(pong);
+		this(pong, set, -1);
 	}
 
 	public void update() {
@@ -55,8 +64,10 @@ public class Player extends Mob {
 	}
 
 	public void render(Graphics g) {
+		g.setColor(getColor());
 		g.fillRect((int) x - (width / 2), (int) y - (height / 2), width, height);
 		g.drawLine(getGoal(), 0, getGoal(), pong.getHeight());
+		g.setColor(pong.getColors()[1];
 	}
 
 	public void reset() {
@@ -105,5 +116,14 @@ public class Player extends Mob {
 
 	public int getScore() {
 		return score;
+	}
+	
+	public Color getColor() {
+		Color color = Color.WHITE;
+		if(playerID != -1) {
+			Color col = pong.getColors()[2 + playerID];
+			if(c != null) color = col;
+		}
+		return color;
 	}
 }

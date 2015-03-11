@@ -54,6 +54,7 @@ public class Ball extends Mob {
 				if (coolDownTop == 0) {
 					if (dirX == -1) yAngle = yAngle - 90;
 					if (dirX == 1) yAngle = yAngle + 90;
+					pong.sound.playOther();
 				}
 				coolDownTop++;
 			} else coolDownTop = 0;
@@ -61,6 +62,7 @@ public class Ball extends Mob {
 				if (coolDownDown == 0) {
 					if (dirX == -1) yAngle = yAngle + 90;
 					if (dirX == 1) yAngle = yAngle - 90;
+					pong.sound.playOther();
 				}
 				coolDownDown++;
 			} else coolDownDown = 0;
@@ -76,6 +78,7 @@ public class Ball extends Mob {
 							if (p.isGoingUp()) yAngle += 10;
 							lastColor = p.getColor();
 							rally++;
+							pong.sound.playOther();
 						}
 						coolDownPaddle++;
 					}
@@ -96,6 +99,7 @@ public class Ball extends Mob {
 							if (p.isGoingUp()) yAngle -= 10;
 							lastColor = p.getColor();
 							rally++;
+							pong.sound.playOther();
 						}
 						coolDownPaddle++;
 					}

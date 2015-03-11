@@ -29,6 +29,7 @@ public class Pong extends Canvas implements Runnable {
 	public Players players;
 	public Ball ball;
 	public Font font;
+	public Sound sound;
 
 	private int mode = 0;
 	private int width, height;
@@ -52,6 +53,7 @@ public class Pong extends Canvas implements Runnable {
 		handler = new Handler(pong);
 		players = new Players(pong);
 		ball = new Ball(pong);
+		sound = new Sound();
 		GOLog.info("Initialized Pong");
 	}
 
@@ -115,6 +117,7 @@ public class Pong extends Canvas implements Runnable {
 		handler.update();
 		players.update();
 		ball.update();
+		sound.update();
 		if (handler.keyboard.esc) reset();
 		if (handler.keyboard.space) ball.start();
 	}
@@ -141,7 +144,10 @@ public class Pong extends Canvas implements Runnable {
 				players.renderScores(g);
 				Data.centerText(0, 0, width, 50, "Pong", g, font.deriveFont(50F));
 				Data.centerText(0, 0, pong.getWidth(), pong.getHeight(), "Press space to start", g, pong.font.deriveFont(25F));
-			}else{
+
+				Data.centerText(0,pong.getHeight() - 50, pong.getWidth(), 25, "Game by Rory Claasen", g, pong.font.deriveFont(25F));
+				Data.centerText(0,pong.getHeight() - 25, pong.getWidth(), 25, "Music by Kevin Macleod", g, pong.font.deriveFont(20F));
+			} else {
 				if (players.getPlayers().length == 2) {
 					for (int i = 0; i < getHeight(); i++) {
 						if (i % 2 == 0) g.drawLine(getWidth() / 2, i * 10, getWidth() / 2, i * 10 + 10);

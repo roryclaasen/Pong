@@ -106,7 +106,7 @@ public class Pong extends Canvas implements Runnable {
 		stop();
 	}
 
-	private void reset() {
+	public void reset() {
 		ball.reset();
 		players.reset();
 	}

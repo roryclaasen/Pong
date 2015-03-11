@@ -9,7 +9,7 @@ import net.gogo98901.util.Data;
 import net.gogo98901.util.GOLog;
 
 public class Player extends Mob {
-	private final int bound = 100, speed = 3;
+	private final int bound = 100, speed =5;
 	private int level = 12;
 	private int width = 10;
 	private int height = width * level;

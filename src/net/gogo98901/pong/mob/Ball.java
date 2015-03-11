@@ -14,6 +14,7 @@ public class Ball extends Mob {
 	}
 
 	private mode currentMode;
+	private Color LastColor = Color.WHITE;
 
 	private int dirX, dirY;
 	private int size = 19;
@@ -21,7 +22,7 @@ public class Ball extends Mob {
 	private int yAngle;
 	private double speed = 4;
 
-	private int coolDownTop,coolDownDown, coolDownPaddle;
+	private int coolDownTop, coolDownDown, coolDownPaddle;
 
 	public Ball(Pong pong) {
 		super(pong);
@@ -73,6 +74,7 @@ public class Ball extends Mob {
 						if (coolDownPaddle == 0) {
 							if (dirY == -1) yAngle = yAngle + 90;
 							if (dirY == 1) yAngle = yAngle - 90;
+							lastColor = p.getColor();
 						}
 						coolDownPaddle++;
 					}
@@ -89,6 +91,7 @@ public class Ball extends Mob {
 						if (coolDownPaddle == 0) {
 							if (dirY == -1) yAngle = yAngle - 90;
 							if (dirY == 1) yAngle = yAngle + 90;
+							lastColor = p.getColor();
 						}
 						coolDownPaddle++;
 					}
@@ -106,7 +109,9 @@ public class Ball extends Mob {
 			Data.centerText(0, 0, pong.getWidth(), pong.getHeight(), "Press space to start", g, pong.font.deriveFont(25F));
 		}
 		if (currentMode == mode.FLYING) {
+			g.setColor(lastColor);
 			g.fillOval((int) x - (size / 2), (int) y - (size / 2), size, size);
+			g.setColor(pong.getColors()[1]);
 		}
 		// g.drawLine(0, 10, pong.getWidth(), 10);
 		// g.drawLine(0, pong.getHeight() - 10, pong.getWidth(), pong.getHeight() - 10);

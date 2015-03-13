@@ -77,6 +77,7 @@ public class Ball extends Mob {
 							if (p.isGoingDown()) yAngle -= 10;
 							if (p.isGoingUp()) yAngle += 10;
 							lastColor = p.getColor();
+							p.hit();
 							rally++;
 							pong.sound.playOther();
 						}
@@ -98,6 +99,7 @@ public class Ball extends Mob {
 							if (p.isGoingDown()) yAngle += 10;
 							if (p.isGoingUp()) yAngle -= 10;
 							lastColor = p.getColor();
+							p.hit();
 							rally++;
 							pong.sound.playOther();
 						}

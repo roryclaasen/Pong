@@ -119,7 +119,10 @@ public class Pong extends Canvas implements Runnable {
 		ball.update();
 		sound.update();
 		if (handler.keyboard.esc) reset();
-		if (handler.keyboard.space) ball.start();
+		if (handler.keyboard.space) {
+			reset();
+			ball.start();
+		}
 	}
 
 	public void render() {
@@ -145,8 +148,8 @@ public class Pong extends Canvas implements Runnable {
 				Data.centerText(0, 0, width, 50, "Pong", g, font.deriveFont(50F));
 				Data.centerText(0, 0, pong.getWidth(), pong.getHeight(), "Press space to start", g, pong.font.deriveFont(25F));
 
-				Data.centerText(0,pong.getHeight() - 50, pong.getWidth(), 25, "Game by Rory Claasen", g, pong.font.deriveFont(25F));
-				Data.centerText(0,pong.getHeight() - 25, pong.getWidth(), 25, "Music by Kevin Macleod", g, pong.font.deriveFont(20F));
+				Data.centerText(0, pong.getHeight() - 50, pong.getWidth(), 25, "Game by Rory Claasen", g, pong.font.deriveFont(25F));
+				Data.centerText(0, pong.getHeight() - 25, pong.getWidth(), 25, "Music by Kevin Macleod", g, pong.font.deriveFont(20F));
 			} else {
 				if (players.getPlayers().length == 2) {
 					for (int i = 0; i < getHeight(); i++) {

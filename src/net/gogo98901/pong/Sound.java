@@ -29,7 +29,7 @@ public class Sound {
 
 	private int lastplayed;
 
-	private float gain = -5F;
+	private float gain = 0F;
 
 	public Sound() {
 		try {
@@ -79,7 +79,6 @@ public class Sound {
 					FloatControl gainControl = (FloatControl) background1.getControl(FloatControl.Type.MASTER_GAIN);
 					gainControl.setValue(gain);
 				}
-
 				if (background2.isOpen()) {
 					FloatControl gainControl = (FloatControl) background2.getControl(FloatControl.Type.MASTER_GAIN);
 					gainControl.setValue(gain);
@@ -108,12 +107,16 @@ public class Sound {
 						clip1.stop();
 						clip1.setFramePosition(0);
 						clip1.start();
+						FloatControl gainControl = (FloatControl) clip1.getControl(FloatControl.Type.MASTER_GAIN);
+						gainControl.setValue(-2F);
 					}
 					if (id == 2) {
 						clip2.open(in2);
 						clip1.stop();
 						clip2.setFramePosition(0);
 						clip2.start();
+						FloatControl gainControl = (FloatControl) clip2.getControl(FloatControl.Type.MASTER_GAIN);
+						gainControl.setValue(-2F);
 					}
 					lastplayed = id;
 				} catch (Exception e) {

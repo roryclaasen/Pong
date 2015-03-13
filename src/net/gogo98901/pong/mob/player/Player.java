@@ -11,25 +11,21 @@ import net.gogo98901.util.GOLog;
 
 public class Player extends Mob {
 
-	private final int bound = 100, speed = 5;
-	private int level = 12;
-	private int width = 10;
-	private int height = width * level;
+	protected final int bound = 100, speed = 5;
+	protected int level = 12;
+	protected int width = 10;
+	protected int height = width * level;
 
-	private int dir;
+	protected int dir, playerID, score;
 
-	private int playerID;
-
-	private int score;
-
-	private boolean moving = false;
+	protected boolean moving = false;
 
 	public enum keySet {
 		RIGHT, LEFT, ONLINE
 	}
 
 	private Keyboard key;
-	private keySet set;
+	protected keySet set;
 
 	public Player(Pong pong, keySet set, int playerNumber) {
 		super(pong);
@@ -63,7 +59,7 @@ public class Player extends Mob {
 		}
 	}
 
-	private void move(int dir) {
+	public void move(int dir) {
 		moving = true;
 		this.dir = dir;
 		if (dir == -1) if ((y - (height / 2)) - speed > 1) y -= speed;
@@ -146,5 +142,9 @@ public class Player extends Mob {
 			if (col != null) color = col;
 		}
 		return color;
+	}
+
+	public void hit() {
+		// Do Something!
 	}
 }

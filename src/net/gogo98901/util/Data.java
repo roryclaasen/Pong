@@ -6,10 +6,14 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
 
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
+
 public class Data {
-	private Data(){
+	private Data() {
 		GOLog.severe("Something went wrong here!");
 	}
+
 	public static Rectangle2D getStringBounds(String t, Graphics g, Font f) {
 		Graphics2D g2d = (Graphics2D) g;
 		g2d.setFont(f);
@@ -32,5 +36,23 @@ public class Data {
 		int posX = x + (width - (int) r.getWidth()) / 2;
 		int posY = y + (height - (int) r.getHeight()) / 2 + fm.getAscent();
 		g.drawString(t, posX, posY);
+	}
+
+	public static void setDefultLookAndFeel() {
+		try {
+			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e) {
+			GOLog.severe(e);
+		}
+	}
+
+	public static boolean isNumeric(String str) {
+		try {
+			@SuppressWarnings("unused")
+			double d = Double.parseDouble(str);
+		} catch (NumberFormatException nfe) {
+			return false;
+		}
+		return true;
 	}
 }

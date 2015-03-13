@@ -31,6 +31,7 @@ public class Pong extends Canvas implements Runnable {
 	public Font font;
 	public Sound sound;
 
+	public int playerNo, maxRounds;
 	private int mode = 0;
 	private int width, height;
 
@@ -41,8 +42,8 @@ public class Pong extends Canvas implements Runnable {
 		width = (int) Math.ceil(Bootstrap.getFrame().getSize().getWidth());
 		height = (int) Math.ceil(Bootstrap.getFrame().getSize().getHeight());
 		try {
-			InputStream fontData = Pong.class.getClassLoader().getResourceAsStream("assets/8-BIT WONDER.TTF");
-			font = Font.createFont(Font.TRUETYPE_FONT, fontData).deriveFont(Font.PLAIN, 12);
+			InputStream fontData = Pong.class.getClassLoader().getResourceAsStream(Bootstrap.font);
+			font = Font.createFont(Font.TRUETYPE_FONT, fontData).deriveFont(Font.PLAIN, 24);
 		} catch (FontFormatException | IOException e) {
 			GOLog.warn("Font not loaded");
 			e.printStackTrace();
@@ -55,6 +56,11 @@ public class Pong extends Canvas implements Runnable {
 		ball = new Ball(pong);
 		sound = new Sound();
 		GOLog.info("Initialized Pong");
+	}
+
+	public void setData(int players, int maxRounds) {
+		this.playerNo = players;
+		this.maxRounds = maxRounds;
 	}
 
 	public void start() {
@@ -118,10 +124,16 @@ public class Pong extends Canvas implements Runnable {
 		players.update();
 		ball.update();
 		sound.update();
-		if (handler.keyboard.esc) reset();
-		if (handler.keyboard.space) {
+		if (players.getScoreTotal() >= maxRounds) {
+			gameOver();
 			reset();
-			ball.start();
+			if (handler.keyboard.esc) Bootstrap.goToStart();
+		} else {
+			if (handler.keyboard.esc) reset();
+			if (handler.keyboard.space) {
+				reset();
+				ball.start();
+			}
 		}
 	}
 
@@ -137,7 +149,7 @@ public class Pong extends Canvas implements Runnable {
 			g.fillRect(0, 0, width, height);
 
 			g.setColor(getColors()[1]);
-			g.setFont(font);
+			g.setFont(font.deriveFont(20F));
 			if (debug) {
 				g.drawString("fps " + fps, 2, 15);
 				g.drawString("ups " + ups, 2, 30);
@@ -145,11 +157,13 @@ public class Pong extends Canvas implements Runnable {
 			}
 			if (ball.isStill()) {
 				players.renderScores(g);
-				Data.centerText(0, 0, width, 50, "Pong", g, font.deriveFont(50F));
-				Data.centerText(0, 0, pong.getWidth(), pong.getHeight(), "Press space to start", g, pong.font.deriveFont(25F));
+				Data.centerText(0, 0, width, 50, "Pong", g, font.deriveFont(75F));
+				if (players.getScoreTotal() < maxRounds) Data.centerText(0, 0, pong.getWidth(), pong.getHeight(), "Press  space  to  start", g, pong.font.deriveFont(45F));
+				else  Data.centerText(0, 0, pong.getWidth(), pong.getHeight(), "Press esc to go to menu", g, pong.font.deriveFont(45F));
 
-				Data.centerText(0, pong.getHeight() - 50, pong.getWidth(), 25, "Game by Rory Claasen", g, pong.font.deriveFont(25F));
-				Data.centerText(0, pong.getHeight() - 25, pong.getWidth(), 25, "Music by Kevin Macleod", g, pong.font.deriveFont(20F));
+				
+				Data.centerText(0, pong.getHeight() - 50, pong.getWidth(), 25, "Game  by  Rory  Claasen", g, pong.font.deriveFont(45F));
+				Data.centerText(0, pong.getHeight() - 25, pong.getWidth(), 25, "Music  by  Kevin  Macleod", g, pong.font.deriveFont(35F));
 			} else {
 				if (players.getPlayers().length == 2) {
 					for (int i = 0; i < getHeight(); i++) {
@@ -178,6 +192,10 @@ public class Pong extends Canvas implements Runnable {
 			c[4] = Color.CYAN;
 		}
 		return c;
+	}
+
+	private void gameOver() {
+		//TODO winner music
 	}
 
 	public static void close() {

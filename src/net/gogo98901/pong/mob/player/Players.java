@@ -11,7 +11,8 @@ public class Players {
 
 	public Players(Pong pong) {
 		players.add(new Player(pong, Player.keySet.LEFT, 0));
-		players.add(new PlayerAI(pong, Player.keySet.RIGHT, 1));
+		if (pong.playerNo == 1) players.add(new PlayerAI(pong, Player.keySet.RIGHT, 1));
+		if (pong.playerNo == 2) players.add(new Player(pong, Player.keySet.RIGHT, 1));
 	}
 
 	public void update() {

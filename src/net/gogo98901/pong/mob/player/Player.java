@@ -78,8 +78,8 @@ public class Player extends Mob {
 	}
 
 	public void renderScore(Graphics g) {
-		if (set == keySet.LEFT) Data.centerText(0, 0, pong.getWidth() / 2, 50, "" + score, g, pong.font.deriveFont(65F));
-		if (set == keySet.RIGHT) Data.centerText(pong.getWidth() / 2, 0, pong.getWidth() / 2, 50, "" + score, g, pong.font.deriveFont(65F));
+		if (set == keySet.LEFT) Data.centerText(0, 0, pong.getWidth() / 2, 50, "" + score, g, pong.font.deriveFont(80F));
+		if (set == keySet.RIGHT) Data.centerText(pong.getWidth() / 2, 0, pong.getWidth() / 2, 50, "" + score, g, pong.font.deriveFont(80F));
 	}
 
 	public void setLevel(int level) {

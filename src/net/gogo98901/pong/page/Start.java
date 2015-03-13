@@ -141,11 +141,21 @@ public class Start extends JPanel {
 						if (playerAI.isSelected()) players = 1;
 						if (playerTwo.isSelected()) players = 2;
 						Bootstrap.start(players, rounds);
-					}else JOptionPane.showMessageDialog(null, "You need to enter a maximum number of rounds", "Pong", JOptionPane.ERROR_MESSAGE);
+					} else JOptionPane.showMessageDialog(null, "You need to enter a maximum number of rounds", "Pong", JOptionPane.ERROR_MESSAGE);
 				} else JOptionPane.showMessageDialog(null, "You need to select a game mode", "Pong", JOptionPane.ERROR_MESSAGE);
 			}
 		});
 		add(start);
+		final JButton close = new JButton("CLOSE");
+		close.setBackground(getBackground());
+		close.setFont(getFont().deriveFont(20F));
+		close.setBounds(getWidth()  - 97, 10, 87, 25);
+		close.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent event) {
+				System.exit(0);
+			}
+		});
+		add(close);
 	}
 
 	private void setFont() {

@@ -38,7 +38,7 @@ public class Bootstrap {
 			frame.setTitle("Pong");
 			pane = new JLayeredPane();
 			start = new Start();
-			start.setSize(new Dimension(width-6, height - 29));
+			start.setSize(new Dimension(width - 6, height - 29));
 			start.init();
 			pane.add(start, new Integer(0), 0);
 			frame.add(pane);
@@ -50,21 +50,30 @@ public class Bootstrap {
 	}
 
 	public static void start(int players, int maxRounds) {
-		if (pong == null) {
-			pong = new Pong();
-			pong.setSize(new Dimension(width-6, height - 29));
-			pane.add(pong, new Integer(1), 0);
+		if (pong != null) {
+			pong.stop();
+			pong = null;
+			pane.remove(new Integer(1));
 		}
+		pong = new Pong();
+		pong.setSize(new Dimension(width - 6, height - 29));
+		pane.add(pong, new Integer(1), 0);
+
 		pong.setData(players, maxRounds);
-		pong.setVisible(true);
-		if (start != null) start.setVisible(false);
-		checkArgs(arguments);
 		pong.start();
+		pong.setVisible(true);
+		start.setVisible(false);
+		checkArgs(arguments);
 	}
-	
-	public static void goToStart(){
+
+	public static void goToStart() {
 		start.setVisible(true);
 		pong.setVisible(false);
+		if (pong != null) {
+			pong.stop();
+			pong = null;
+			pane.remove(new Integer(1));
+		}
 	}
 
 	public static JFrame getFrame() {

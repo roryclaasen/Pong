@@ -49,6 +49,7 @@ public class Start extends JPanel {
 
 		final ButtonGroup button = new ButtonGroup();
 		final JRadioButton playerTwo = new JRadioButton();
+		playerTwo.setSelected(true);
 		playerTwo.setBackground(getBackground());
 		playerTwo.setBounds(100, getHeight() / 2 - 75, 20, 20);
 		button.add(playerTwo);
@@ -125,7 +126,7 @@ public class Start extends JPanel {
 		add(maxRoundsText);
 
 		final JButton start = new JButton("START");
-		start.setBackground(getBackground());
+		//start.setBackground(getBackground());
 		start.setFont(getFont().deriveFont(50F));
 		start.setBounds(getWidth() / 4, getHeight() - 100, getWidth() / 2, 50);
 		start.addActionListener(new ActionListener() {
@@ -147,7 +148,7 @@ public class Start extends JPanel {
 		});
 		add(start);
 		final JButton close = new JButton("CLOSE");
-		close.setBackground(getBackground());
+		//close.setBackground(getBackground());
 		close.setFont(getFont().deriveFont(20F));
 		close.setBounds(getWidth()  - 97, 10, 87, 25);
 		close.addActionListener(new ActionListener() {

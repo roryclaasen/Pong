@@ -16,7 +16,7 @@ public class Ball extends Mob {
 	private Color lastColor = Color.WHITE;
 
 	private int dirX, dirY;
-	private int size = 19;
+	private int startSize = 19, size = startSize;
 
 	private int yAngle;
 	private double startSpeed = 4, speed = startSpeed;
@@ -121,9 +121,9 @@ public class Ball extends Mob {
 		player.hit();
 		rally++;
 		pong.sound.playOther();
-		int ran = rand.nextInt(3) - 1;
-		if (ran == -1) yAngle -= rand.nextInt(10);
-		if (ran == 1) yAngle += rand.nextInt(10);
+		/*
+		 * if (rand.nextInt(2) == 0) { int ran = rand.nextInt(3) - 1; if (ran == -1) yAngle -= rand.nextInt(10); if (ran == 1) yAngle += rand.nextInt(10); }
+		 */
 	}
 
 	public double getRallySpeed() {
@@ -159,6 +159,8 @@ public class Ball extends Mob {
 			rally = 0;
 			lastColor = Color.WHITE;
 			speed = startSpeed;
+			size = startSize - (pong.players.getScoreTotal() / 2);
+			if (size < 13) size = 13;
 		}
 	}
 

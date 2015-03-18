@@ -11,8 +11,9 @@ import net.gogo98901.util.GOLog;
 
 public class Player extends Mob {
 
+	public static final int DEFULTLEVEL = 12;
 	protected final int bound = 100, speed = 5;
-	protected int level = 12;
+	protected int level = DEFULTLEVEL;
 	protected int width = 10;
 	protected int height = width * level;
 
@@ -142,6 +143,10 @@ public class Player extends Mob {
 			if (col != null) color = col;
 		}
 		return color;
+	}
+
+	public void setScore(int score) {
+		this.score = score;
 	}
 
 	public void hit() {

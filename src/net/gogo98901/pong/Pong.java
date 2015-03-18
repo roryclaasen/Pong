@@ -121,6 +121,11 @@ public class Pong extends Canvas implements Runnable {
 		players.reset();
 	}
 
+	public void resetAll() {
+		ball.reset();
+		players.resetAll();
+	}
+
 	private void update() {
 		handler.update();
 		players.update();
@@ -196,7 +201,7 @@ public class Pong extends Canvas implements Runnable {
 	}
 
 	private void gameOver() {
-		//TODO winner music
+		// TODO winner music
 	}
 
 	public static void close() {

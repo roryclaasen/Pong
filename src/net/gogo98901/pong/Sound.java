@@ -150,6 +150,17 @@ public class Sound {
 			play(1);
 			return;
 		}
+	}
 
+	public void stop() {
+		if (clip1 != null) clip1.stop();
+		if (clip2 != null) clip2.stop();
+		if (background1 != null) background1.stop();
+		if (background2 != null) background2.stop();
+
+		clip1 = null;
+		clip2 = null;
+		background1 = null;
+		background2 = null;
 	}
 }

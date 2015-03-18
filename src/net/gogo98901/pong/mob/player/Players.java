@@ -19,11 +19,11 @@ public class Players {
 		for (int i = 0; i < 2; i++) {
 			Player p = getPlayers()[i];
 			p.update();
-			if (p.getScore() == 2) p.setLevel(10);
-			if (p.getScore() == 4) p.setLevel(8);
-			if (p.getScore() == 6) p.setLevel(6);
-			if (p.getScore() == 10) p.setLevel(4);
-			if (p.getScore() == 14) p.setLevel(2);
+			if (p.getScore() == 2) p.setLevel(Player.DEFULTLEVEL - 2);
+			if (p.getScore() == 4) p.setLevel(Player.DEFULTLEVEL - 4);
+			if (p.getScore() == 6) p.setLevel(Player.DEFULTLEVEL - 6);
+			if (p.getScore() == 10) p.setLevel(Player.DEFULTLEVEL - 8);
+			if (p.getScore() == 14) p.setLevel(Player.DEFULTLEVEL - 10);
 		}
 	}
 
@@ -69,5 +69,12 @@ public class Players {
 			score += player.getScore();
 		}
 		return score;
+	}
+
+	public void resetAll() {
+		setLevelAll(Player.DEFULTLEVEL);
+		for (Player player : players) {
+			player.setScore(0);
+		}
 	}
 }

@@ -119,7 +119,7 @@ public class Start extends JPanel {
 		maxRounds.setText("10");
 		add(maxRounds);
 
-		final JLabel maxRoundsText = new JLabel("max rounds");
+		final JLabel maxRoundsText = new JLabel("Number of Rounds");
 		maxRoundsText.setFont(getFont().deriveFont(25F));
 		maxRoundsText.setForeground(getForeground());
 		maxRoundsText.setBounds(maxRounds.getX() + maxRounds.getWidth() + 5, maxRounds.getY(), getWidth() - (maxRounds.getX() + 25), maxRounds.getHeight());

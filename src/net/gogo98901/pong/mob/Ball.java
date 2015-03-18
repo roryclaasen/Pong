@@ -34,6 +34,14 @@ public class Ball extends Mob {
 			reset();
 			currentMode = mode.FLYING;
 			yAngle = rand.nextInt(360);
+			if (yAngle < 45 || yAngle > 360 - 45) {
+				if (rand.nextInt(2) == 0) yAngle -= 60;
+				else yAngle += 60;
+			}
+			if (yAngle > 180 - 45 && yAngle < 180 + 45) {
+				if (rand.nextInt(2) == 0) yAngle -= 60;
+				else yAngle += 60;
+			}
 		}
 	}
 
@@ -66,52 +74,56 @@ public class Ball extends Mob {
 				}
 				coolDownDown++;
 			} else coolDownDown = 0;
-			Player p;
+			Player player;
 			if (isLeft()) {
-				p = pong.players.getPlayers()[0];
-				if (x - (getHalfSize() / 2) <= p.getX() + p.getWidth()) {
-					if (y + getHalfSize() >= p.getY() - p.getHeightHalf() && y - getHalfSize() <= p.getY() + p.getHeightHalf()) {
+				player = pong.players.getPlayers()[0];
+				if (x - (getHalfSize() / 2) <= player.getX() + player.getWidth()) {
+					if (y + getHalfSize() >= player.getY() - player.getHeightHalf() && y - getHalfSize() <= player.getY() + player.getHeightHalf()) {
 						if (coolDownPaddle == 0) {
 							if (dirY == -1) yAngle = yAngle + 90;
 							if (dirY == 1) yAngle = yAngle - 90;
-							if (p.isGoingDown()) yAngle -= 10;
-							if (p.isGoingUp()) yAngle += 10;
-							lastColor = p.getColor();
-							p.hit();
-							rally++;
-							pong.sound.playOther();
+							if (player.isGoingDown()) yAngle -= 15 + rand.nextInt(5);
+							if (player.isGoingUp()) yAngle += 15 + rand.nextInt(5);
+							hit(player);
 						}
 						coolDownPaddle++;
 					}
 				} else coolDownPaddle = 0;
-				if (x <= p.getGoal()) {
+				if (x <= player.getGoal()) {
 					pong.players.getPlayers()[1].addPoint();
 					pong.reset();
 				}
 			}
 			if (isRight()) {
-				p = pong.players.getPlayers()[1];
-				if (x + (getHalfSize() / 2) >= p.getX() - p.getWidth()) {
-					if (y + getHalfSize() >= p.getY() - p.getHeightHalf() && y - getHalfSize() <= p.getY() + p.getHeightHalf()) {
+				player = pong.players.getPlayers()[1];
+				if (x + (getHalfSize() / 2) >= player.getX() - player.getWidth()) {
+					if (y + getHalfSize() >= player.getY() - player.getHeightHalf() && y - getHalfSize() <= player.getY() + player.getHeightHalf()) {
 						if (coolDownPaddle == 0) {
 							if (dirY == -1) yAngle = yAngle - 90;
 							if (dirY == 1) yAngle = yAngle + 90;
-							if (p.isGoingDown()) yAngle += 10;
-							if (p.isGoingUp()) yAngle -= 10;
-							lastColor = p.getColor();
-							p.hit();
-							rally++;
-							pong.sound.playOther();
+							if (player.isGoingDown()) yAngle += 15 + rand.nextInt(5);
+							if (player.isGoingUp()) yAngle -= 15 + rand.nextInt(5);
+							hit(player);
 						}
 						coolDownPaddle++;
 					}
 				} else coolDownPaddle = 0;
-				if (x >= p.getGoal()) {
+				if (x >= player.getGoal()) {
 					pong.players.getPlayers()[0].addPoint();
 					reset();
 				}
 			}
 		}
+	}
+
+	public void hit(Player player) {
+		lastColor = player.getColor();
+		player.hit();
+		rally++;
+		pong.sound.playOther();
+		int ran = rand.nextInt(3) - 1;
+		if (ran == -1) yAngle -= rand.nextInt(10);
+		if (ran == 1) yAngle += rand.nextInt(10);
 	}
 
 	public double getRallySpeed() {

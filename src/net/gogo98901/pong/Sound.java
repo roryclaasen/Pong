@@ -42,8 +42,6 @@ public class Sound {
 			background1 = AudioSystem.getClip();
 			background2 = AudioSystem.getClip();
 			success = true;
-
-			playBackground();
 		} catch (Exception e) {
 			GOLog.severe(e);
 			e.printStackTrace();
@@ -52,6 +50,8 @@ public class Sound {
 
 	public void playBackground() {
 		try {
+			intro = AudioSystem.getAudioInputStream(Sound.class.getClassLoader().getResource(back1));
+			background1 = AudioSystem.getClip();
 			background1.open(intro);
 			background1.start();
 		} catch (Exception e) {

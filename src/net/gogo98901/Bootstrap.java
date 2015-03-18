@@ -63,6 +63,8 @@ public class Bootstrap {
 		pong.setVisible(true);
 		start.setVisible(false);
 		checkArgs(arguments);
+		
+		pong.sound.playBackground();
 	}
 
 	public static void goToStart() {

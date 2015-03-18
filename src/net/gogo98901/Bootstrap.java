@@ -8,6 +8,7 @@ import javax.swing.JFrame;
 import javax.swing.JLayeredPane;
 
 import net.gogo98901.pong.Pong;
+import net.gogo98901.pong.handler.Handler;
 import net.gogo98901.pong.page.Start;
 import net.gogo98901.util.Data;
 import net.gogo98901.util.GOLog;
@@ -38,6 +39,7 @@ public class Bootstrap {
 			frame.setLocationRelativeTo(null);
 			frame.setIconImage(ImageIO.read(Pong.class.getClassLoader().getResourceAsStream("assets/icon.png")));
 			frame.setTitle("Pong");
+			Handler.addWindow();
 			pane = new JLayeredPane();
 			start = new Start();
 			start.setSize(new Dimension(width - 6, height - 29));
@@ -63,7 +65,7 @@ public class Bootstrap {
 		pong.setVisible(true);
 		start.setVisible(false);
 		checkArgs(arguments);
-		
+
 		pong.sound.playBackground();
 	}
 
@@ -89,5 +91,10 @@ public class Bootstrap {
 				}
 			}
 		}
+	}
+
+	public static boolean isGame() {
+		if (pong == null) return false;
+		return pong.isVisible();
 	}
 }

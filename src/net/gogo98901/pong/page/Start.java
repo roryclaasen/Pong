@@ -147,7 +147,7 @@ public class Start extends JPanel {
 			}
 		});
 		add(start);
-		final JButton close = new JButton("CLOSE");
+		/*final JButton close = new JButton("CLOSE");
 		//close.setBackground(getBackground());
 		close.setFont(getFont().deriveFont(20F));
 		close.setBounds(getWidth()  - 97, 10, 90, 25);
@@ -156,7 +156,7 @@ public class Start extends JPanel {
 				System.exit(0);
 			}
 		});
-		add(close);
+		add(close);*/
 	}
 
 	private void setFont() {

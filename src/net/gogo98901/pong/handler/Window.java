@@ -4,6 +4,7 @@ import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 
 import net.gogo98901.Bootstrap;
+import net.gogo98901.pong.Pong;
 
 public class Window implements WindowListener {
 
@@ -20,7 +21,8 @@ public class Window implements WindowListener {
 	}
 
 	public void windowClosing(WindowEvent e) {
-		Bootstrap.goToStart();
+		if(Bootstrap.isGame())Bootstrap.goToStart();
+		else Pong.close();
 	}
 
 	public void windowDeactivated(WindowEvent e) {

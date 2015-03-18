@@ -150,7 +150,7 @@ public class Start extends JPanel {
 		final JButton close = new JButton("CLOSE");
 		//close.setBackground(getBackground());
 		close.setFont(getFont().deriveFont(20F));
-		close.setBounds(getWidth()  - 97, 10, 87, 25);
+		close.setBounds(getWidth()  - 97, 10, 90, 25);
 		close.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
 				System.exit(0);

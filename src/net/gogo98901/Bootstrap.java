@@ -22,6 +22,8 @@ public class Bootstrap {
 	private static int width = 700, height = 500;
 	public static final String font = "assets/ARCADECLASSIC.TTF";
 
+	private static int screen = -1;
+
 	public static void main(String[] args) {
 		GOLog.init();
 		GOLog.info("Program Started");
@@ -37,8 +39,7 @@ public class Bootstrap {
 			frame.setIconImage(ImageIO.read(Pong.class.getClassLoader().getResourceAsStream("assets/icon.png")));
 			frame.setTitle("Pong");
 			pane = new JLayeredPane();
-			start = new Start();
-			start.setSize(new Dimension(width - 6, height - 29));
+			addStart();
 			start.init();
 			pane.add(start, new Integer(0), 0);
 			frame.add(pane);
@@ -49,31 +50,58 @@ public class Bootstrap {
 		}
 	}
 
-	public static void start(int players, int maxRounds) {
+	public static void start(final int players, final int maxRounds) {
+		new Thread(new Runnable() {
+			public void run() {
+				if (pong != null) {
+					pong.stop();
+					pane.remove(new Integer(1));
+				}
+				addPong();
+				pong.setData(players, maxRounds);
+				pong.start();
+				pong.setVisible(true);
+				start.setVisible(false);
+				checkArgs(arguments);
+				screen =1;
+			}
+		}).start();
+	}
+
+	public static void goToStart() {
+		new Thread(new Runnable() {
+			public void run() {
+				addStart();
+				start.init();
+				start.setVisible(true);
+				screen = 0;
+				if (pong != null) {
+					pong.setVisible(false);
+					pong.stop();
+					pane.remove(new Integer(1));
+				}
+			}
+		}).start();
+	}
+
+	private static void addStart() {
+		if (start != null) {
+			start = null;
+			pane.remove(new Integer(0));
+		}
+		start = new Start();
+		start.setSize(new Dimension(width - 6, height - 29));
+		pane.add(start, new Integer(0), 0);
+	}
+
+	private static void addPong() {
 		if (pong != null) {
-			pong.stop();
 			pong = null;
 			pane.remove(new Integer(1));
 		}
 		pong = new Pong();
 		pong.setSize(new Dimension(width - 6, height - 29));
 		pane.add(pong, new Integer(1), 0);
-
-		pong.setData(players, maxRounds);
-		pong.start();
-		pong.setVisible(true);
-		start.setVisible(false);
-		checkArgs(arguments);
-	}
-
-	public static void goToStart() {
-		start.setVisible(true);
-		pong.setVisible(false);
-		if (pong != null) {
-			pong.stop();
-			pong = null;
-			pane.remove(new Integer(1));
-		}
 	}
 
 	public static JFrame getFrame() {

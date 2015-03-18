@@ -75,12 +75,14 @@ public class Pong extends Canvas implements Runnable {
 	}
 
 	public void stop() {
-		GOLog.warn("Stoping Thread");
-		running = false;
-		try {
-			_t.join();
-		} catch (InterruptedException e) {
-			e.printStackTrace();
+		if (running) {
+			GOLog.warn("Stoping Thread");
+			running = false;
+			try {
+				_t.join();
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 
@@ -159,9 +161,8 @@ public class Pong extends Canvas implements Runnable {
 				players.renderScores(g);
 				Data.centerText(0, 0, width, 50, "Pong", g, font.deriveFont(75F));
 				if (players.getScoreTotal() < maxRounds) Data.centerText(0, 0, pong.getWidth(), pong.getHeight(), "Press  space  to  start", g, pong.font.deriveFont(45F));
-				else  Data.centerText(0, 0, pong.getWidth(), pong.getHeight(), "Press esc to go to menu", g, pong.font.deriveFont(45F));
+				else Data.centerText(0, 0, pong.getWidth(), pong.getHeight(), "Press esc to go to menu", g, pong.font.deriveFont(45F));
 
-				
 				Data.centerText(0, pong.getHeight() - 50, pong.getWidth(), 25, "Game  by  Rory  Claasen", g, pong.font.deriveFont(45F));
 				Data.centerText(0, pong.getHeight() - 25, pong.getWidth(), 25, "Music  by  Kevin  Macleod", g, pong.font.deriveFont(35F));
 			} else {

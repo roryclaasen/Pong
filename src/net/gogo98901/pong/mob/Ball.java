@@ -69,7 +69,7 @@ public class Ball extends Mob {
 			Player p;
 			if (isLeft()) {
 				p = pong.players.getPlayers()[0];
-				if (x - (getHalfSize() / 2) - 2 <= p.getX() + p.getWidth()) {
+				if (x - (getHalfSize() / 2) <= p.getX() + p.getWidth()) {
 					if (y + getHalfSize() >= p.getY() - p.getHeightHalf() && y - getHalfSize() <= p.getY() + p.getHeightHalf()) {
 						if (coolDownPaddle == 0) {
 							if (dirY == -1) yAngle = yAngle + 90;
@@ -91,7 +91,7 @@ public class Ball extends Mob {
 			}
 			if (isRight()) {
 				p = pong.players.getPlayers()[1];
-				if (x + (getHalfSize() / 2) + 2 >= p.getX() - p.getWidth()) {
+				if (x + (getHalfSize() / 2) >= p.getX() - p.getWidth()) {
 					if (y + getHalfSize() >= p.getY() - p.getHeightHalf() && y - getHalfSize() <= p.getY() + p.getHeightHalf()) {
 						if (coolDownPaddle == 0) {
 							if (dirY == -1) yAngle = yAngle - 90;
@@ -115,8 +115,8 @@ public class Ball extends Mob {
 	}
 
 	public double getRallySpeed() {
-		/*	if (startSpeed + (rally / 2) < 10) */return startSpeed + (rally / 2);
-		//else return 10;
+		if (startSpeed + (rally / 2) < 10) return startSpeed + (rally / 2);
+		else return 20;
 	}
 
 	public double getStartSpeed() {

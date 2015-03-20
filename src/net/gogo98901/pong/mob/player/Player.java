@@ -119,8 +119,8 @@ public class Player extends Mob {
 	}
 
 	public int getGoal() {
-		if (set == keySet.LEFT) return (int) x - width;
-		if (set == keySet.RIGHT) return (int) x + width;
+		if (set == keySet.LEFT) return (int) x ;
+		if (set == keySet.RIGHT) return (int) x;
 		return 0;
 	}
 

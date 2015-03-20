@@ -8,6 +8,8 @@ import net.gogo98901.pong.mob.player.Player;
 
 public class Ball extends Mob {
 
+	private int time;
+
 	private enum mode {
 		STILL, FLYING
 	}
@@ -47,7 +49,11 @@ public class Ball extends Mob {
 
 	public void update() {
 		if (currentMode == mode.FLYING) {
-			speed = getRallySpeed();
+			time++;
+			if (time % 30 == 0) {
+				//if (size != 2000) size++;
+				//if (speed != 100) speed++;
+			}
 			if (yAngle > 360) yAngle = yAngle - 360;
 			if (yAngle < 0) yAngle = yAngle + 360;
 			double dy = Math.sin(Math.toRadians(yAngle));
@@ -153,6 +159,7 @@ public class Ball extends Mob {
 
 	public void reset() {
 		if (!isStill()) {
+			time = 0;
 			currentMode = mode.STILL;
 			x = pong.getWidth() / 2;
 			y = pong.getHeight() / 2;

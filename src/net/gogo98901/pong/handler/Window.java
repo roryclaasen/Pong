@@ -21,8 +21,8 @@ public class Window implements WindowListener {
 	}
 
 	public void windowClosing(WindowEvent e) {
-		if(Bootstrap.isGame())Bootstrap.goToStart();
-		else Pong.close();
+		/*if(Bootstrap.isGame())Bootstrap.goToStart();
+		else*/ Pong.close();
 	}
 
 	public void windowDeactivated(WindowEvent e) {

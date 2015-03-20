@@ -131,13 +131,13 @@ public class Pong extends Canvas implements Runnable {
 		players.update();
 		ball.update();
 		sound.update();
+
 		if (players.getScoreTotal() >= maxRounds) {
 			gameOver();
 			reset();
-			if (handler.keyboard.esc) Bootstrap.goToStart();
 		} else {
-			if (handler.keyboard.esc) reset();
 			if (handler.keyboard.space) {
+				if (handler.keyboard.esc) Bootstrap.goToStart();
 				reset();
 				ball.start();
 			}

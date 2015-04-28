@@ -50,6 +50,7 @@ public class Ball extends Mob {
 	public void update() {
 		if (currentMode == mode.FLYING) {
 			time++;
+			speed = getRallySpeed();
 			if (time % 30 == 0) {
 				//if (size != 2000) size++;
 				//if (speed != 100) speed++;
@@ -133,8 +134,8 @@ public class Ball extends Mob {
 	}
 
 	public double getRallySpeed() {
-		if (startSpeed + (rally / 2) < 10) return startSpeed + (rally / 2);
-		else return 20;
+		/*if (startSpeed + (rally / 2) < 10)*/ return startSpeed + (rally/* / 2*/);
+		//else return 20;
 	}
 
 	public double getStartSpeed() {

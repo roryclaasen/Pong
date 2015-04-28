@@ -22,7 +22,7 @@ public class Bootstrap {
 
 	private static boolean started = false;
 
-	private static int width = 700, height = 500;
+	private static int width = 1000, height = 600;
 	public static final String font = "assets/ARCADECLASSIC.TTF";
 
 	public static void main(String[] args) {

@@ -13,6 +13,7 @@ public class GOLog {
 	public static void init() {
 		// java.util.logging.SimpleFormatter.format=%4$s: %5$s [%1$tc]%n
 		System.setProperty("java.util.logging.SimpleFormatter.format", "%4$s: %5$s "/* [%1$tc] */+ "%n");
+		info("Logger set up");
 	}
 
 	public static void log(Level level, Object data) {

@@ -10,6 +10,7 @@ import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
 import net.gogo98901.util.GOLog;
+import net.gogo98901.util.Random;
 
 public class Sound {
 	private String impact1 = "assets/impact1.wav";

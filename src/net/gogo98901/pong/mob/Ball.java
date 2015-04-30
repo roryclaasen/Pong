@@ -19,8 +19,8 @@ public class Ball extends Mob {
 	private Color lastColor = Color.WHITE;
 
 	@SuppressWarnings("unused")
-	private int dirX, dirY, randomAngle = 20;
-	private boolean doAngle = false;
+	private int dirX, dirY, randomAngle = 5;
+	private boolean doRandom = false;
 	private int startSize = 19, size = startSize;
 
 	private int yAngle;
@@ -71,8 +71,8 @@ public class Ball extends Mob {
 			if (y - (getSize() / 2) <= 0) {
 				if (coolDownTop == 0) {
 					yAngle = 360 - yAngle;
-					if (dirX == -1 && doAngle) yAngle -= rand.nextInt(randomAngle);
-					if (dirX == 1 && doAngle) yAngle += rand.nextInt(randomAngle);
+					if (dirX == -1 && doRandom) yAngle -= rand.nextInt(randomAngle);
+					if (dirX == 1 && doRandom) yAngle += rand.nextInt(randomAngle);
 					pong.sound.playOther();
 				}
 				coolDownTop++;
@@ -80,8 +80,8 @@ public class Ball extends Mob {
 			if (y + (getSize() / 2) >= pong.getHeight()) {
 				if (coolDownDown == 0) {
 					yAngle = 360 - yAngle;
-					if (dirX == -1 && doAngle) yAngle += rand.nextInt(randomAngle);
-					if (dirX == 1 && doAngle) yAngle -= rand.nextInt(randomAngle);
+					if (dirX == -1 && doRandom) yAngle += rand.nextInt(randomAngle);
+					if (dirX == 1 && doRandom) yAngle -= rand.nextInt(randomAngle);
 					pong.sound.playOther();
 				}
 				coolDownDown++;
@@ -93,8 +93,6 @@ public class Ball extends Mob {
 					if (y + getHalfSize() >= player.getY() - player.getHeightHalf() && y - getHalfSize() <= player.getY() + player.getHeightHalf()) {
 						if (coolDownPaddle == 0) {
 							yAngle = 180 - yAngle;
-							//if (player.isGoingDown()) yAngle -= 15 + rand.nextInt(5);
-							//if (player.isGoingUp()) yAngle += 15 + rand.nextInt(5);
 							hit(player);
 						}
 						coolDownPaddle++;
@@ -111,8 +109,6 @@ public class Ball extends Mob {
 					if (y + getHalfSize() >= player.getY() - player.getHeightHalf() && y - getHalfSize() <= player.getY() + player.getHeightHalf()) {
 						if (coolDownPaddle == 0) {
 							yAngle = 180 - yAngle;
-							//if (player.isGoingDown()) yAngle += 15 + rand.nextInt(5);
-							//if (player.isGoingUp()) yAngle -= 15 + rand.nextInt(5);
 							hit(player);
 						}
 						coolDownPaddle++;
@@ -131,9 +127,6 @@ public class Ball extends Mob {
 		player.hit();
 		rally++;
 		pong.sound.playOther();
-		/*
-		 * if (rand.nextInt(2) == 0) { int ran = rand.nextInt(3) - 1; if (ran == -1) yAngle -= rand.nextInt(10); if (ran == 1) yAngle += rand.nextInt(10); }
-		 */
 	}
 
 	public double getRallySpeed() {

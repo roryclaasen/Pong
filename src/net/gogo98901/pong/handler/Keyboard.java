@@ -71,6 +71,7 @@ public class Keyboard implements KeyListener {
 		j = keys[KeyEvent.VK_J];
 		k = keys[KeyEvent.VK_K];
 		l = keys[KeyEvent.VK_L];
+
 		z = keys[KeyEvent.VK_Z];
 		x = keys[KeyEvent.VK_X];
 		c = keys[KeyEvent.VK_C];
@@ -104,7 +105,6 @@ public class Keyboard implements KeyListener {
 	}
 
 	public void keyTyped(KeyEvent e) {
-
 	}
 
 	public boolean singlePress(boolean key) {
@@ -117,5 +117,13 @@ public class Keyboard implements KeyListener {
 			toReturn = false;
 		}
 		return toReturn;
+	}
+
+	public boolean setKey(int key, boolean state) {
+		return keys[key] = state;
+	}
+
+	public boolean[] getkeys() {
+		return keys;
 	}
 }

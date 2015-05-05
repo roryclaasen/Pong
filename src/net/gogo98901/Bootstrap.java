@@ -30,6 +30,7 @@ public class Bootstrap {
 		GOLog.info("Program Started");
 		Data.setDefultLookAndFeel();
 		arguments = args;
+		checkArgs(arguments, false);
 		try {
 			frame = new JFrame();
 			frame.setSize(new Dimension(width, height));
@@ -46,6 +47,10 @@ public class Bootstrap {
 			start.init();
 			pane.add(start, new Integer(0), 0);
 			frame.add(pane);
+			pong = new Pong();
+			pong.setSize(new Dimension(width - 6, height - 29));
+			pane.add(pong, new Integer(1), 0);
+			pong.setVisible(false);
 			frame.setVisible(true);
 		} catch (Exception e) {
 			GOLog.severe(e);
@@ -54,17 +59,12 @@ public class Bootstrap {
 	}
 
 	public static void start(final int players, final int maxRounds) {
-		if (pong == null) {
-			pong = new Pong();
-			pong.setSize(new Dimension(width - 6, height - 29));
-			pane.add(pong, new Integer(1), 0);
-		}
 		pong.setData(players, maxRounds);
+		checkArgs(arguments);
 		if (!started) pong.start();
 		started = true;
 		pong.setVisible(true);
 		start.setVisible(false);
-		checkArgs(arguments);
 
 		pong.sound.playBackground();
 	}
@@ -82,15 +82,26 @@ public class Bootstrap {
 		return frame;
 	}
 
-	private static void checkArgs(String[] args) {
+	private static void checkArgs(String[] args, boolean doGame) {
 		if (args != null) {
 			for (String arg : args) {
 				if (arg.startsWith("-")) {
 					arg = arg.replaceFirst("-", "");
-					if (arg.equals("debug") || arg.equals("dev")) pong.debug = true;
+					if (arg.equals("small")) {
+						width -= 300;
+						height -= 125;
+					}
+					if (doGame) {
+						if (arg.equals("debug") || arg.equals("dev")) pong.debug = true;
+						if (arg.equals("silent") || arg.equals("mute")) pong.slient = true;
+					}
 				}
 			}
 		}
+	}
+
+	private static void checkArgs(String[] args) {
+		checkArgs(args, true);
 	}
 
 	public static boolean isGame() {

@@ -35,18 +35,15 @@ public class Ball extends Mob {
 	}
 
 	public void start() {
+		int angle = 30 + rand.nextInt(30) + (30 * rand.nextInt(4));
+		start(angle);
+	}
+
+	public void start(int angle) {
 		if (currentMode == mode.STILL) {
 			reset();
 			currentMode = mode.FLYING;
-			yAngle = rand.nextInt(360);
-			/*if (yAngle < 45 || yAngle > 360 - 45) {
-				if (rand.nextInt(2) == 0) yAngle -= 60;
-				else yAngle += 60;
-			}
-			if (yAngle > 180 - 45 && yAngle < 180 + 45) {
-				if (rand.nextInt(2) == 0) yAngle -= 60;
-				else yAngle += 60;
-			}*/
+			yAngle = angle;
 		}
 	}
 
@@ -152,6 +149,14 @@ public class Ball extends Mob {
 
 	public int getHalfSize() {
 		return size / 2;
+	}
+
+	public int getAngle() {
+		return yAngle;
+	}
+
+	public void setAngle(int angle) {
+		yAngle = angle;
 	}
 
 	public void reset() {

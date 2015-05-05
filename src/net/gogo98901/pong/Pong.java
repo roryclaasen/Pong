@@ -5,9 +5,12 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontFormatException;
 import java.awt.Graphics;
+import java.awt.event.KeyEvent;
 import java.awt.image.BufferStrategy;
 import java.io.IOException;
 import java.io.InputStream;
+
+import javax.swing.JOptionPane;
 
 import net.gogo98901.Bootstrap;
 import net.gogo98901.pong.handler.Handler;
@@ -19,8 +22,8 @@ import net.gogo98901.util.GOLog;
 public class Pong extends Canvas implements Runnable {
 	private static final long serialVersionUID = 1L;
 
-	private boolean running = false;
-	public boolean debug = false;
+	private boolean running = false, pause;
+	public boolean debug = false, slient = false;
 
 	private Thread _t;
 	private Pong pong;
@@ -54,7 +57,7 @@ public class Pong extends Canvas implements Runnable {
 		handler = new Handler(pong);
 		players = new Players(pong);
 		ball = new Ball(pong);
-		sound = new Sound();
+		sound = new Sound(pong);
 		GOLog.info("Initialized Pong");
 	}
 
@@ -128,8 +131,10 @@ public class Pong extends Canvas implements Runnable {
 
 	private void update() {
 		handler.update();
-		players.update();
-		ball.update();
+		if (!pause) {
+			players.update();
+			ball.update();
+		}
 		sound.update();
 
 		if (players.getScoreTotal() >= maxRounds) {
@@ -137,6 +142,33 @@ public class Pong extends Canvas implements Runnable {
 			reset();
 		} else {
 			if (handler.keyboard.esc) Bootstrap.goToStart();
+			if (debug) {
+				if (handler.keyboard.F1) {
+					pause = true;
+					handler.keyboard.setKey(KeyEvent.VK_F1, false);
+					handler.update();
+					String input = JOptionPane.showInputDialog(Bootstrap.getFrame(), null, "Enter the new angle", JOptionPane.PLAIN_MESSAGE);
+					if (input != null) {
+						if (Data.isNumeric(input)) {
+							ball.setAngle(Integer.parseInt(input));
+						}
+					}
+					pause = false;
+				}
+				if (handler.keyboard.F2) {
+					pause = true;
+					handler.keyboard.setKey(KeyEvent.VK_F2, false);
+					handler.update();
+					String input = JOptionPane.showInputDialog(Bootstrap.getFrame(), null, "Enter the new start angle", JOptionPane.PLAIN_MESSAGE);
+					if (input != null) {
+						if (Data.isNumeric(input)) {
+							reset();
+							ball.start(Integer.parseInt(input));
+						}
+					}
+					pause = false;
+				}
+			}
 			if (handler.keyboard.space) {
 				reset();
 				ball.start();
@@ -161,6 +193,7 @@ public class Pong extends Canvas implements Runnable {
 				g.drawString("fps " + fps, 2, 15);
 				g.drawString("ups " + ups, 2, 30);
 				g.drawString("sob " + (int) ball.getRallySpeed(), 2, 45);
+				g.drawString("ang " + ball.getAngle(), 2, 60);
 			}
 			if (ball.isStill()) {
 				players.renderScores(g);

@@ -1,7 +1,7 @@
 package net.gogo98901.pong.mob.player;
 
+import net.gogo98901.log.Log;
 import net.gogo98901.pong.Pong;
-import net.gogo98901.util.GOLog;
 
 public class PlayerAI extends Player {
 
@@ -32,7 +32,7 @@ public class PlayerAI extends Player {
 	}
 
 	private void changeAI() {
-		GOLog.info("Ai changing from " + modeAI);
+		Log.info("Ai changing from " + modeAI);
 		modeAIlast = modeAI;
 		AI temp = AI.values()[rand.nextInt(AI.values().length)];
 		while (temp == modeAIlast) {
@@ -40,7 +40,7 @@ public class PlayerAI extends Player {
 			if (temp != modeAIlast) return;
 		}
 		modeAI = temp;
-		GOLog.info("Ai set to " + modeAI);
+		Log.info("Ai set to " + modeAI);
 	}
 
 	private void follow() {

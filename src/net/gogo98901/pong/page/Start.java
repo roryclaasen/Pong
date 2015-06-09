@@ -20,9 +20,9 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
 import net.gogo98901.Bootstrap;
+import net.gogo98901.log.Log;
 import net.gogo98901.pong.Pong;
 import net.gogo98901.pong.util.JFormattedTextField;
-import net.gogo98901.util.GOLog;
 
 public class Start extends JPanel {
 	private static final long serialVersionUID = 1L;
@@ -164,8 +164,8 @@ public class Start extends JPanel {
 			InputStream fontData = Pong.class.getClassLoader().getResourceAsStream(Bootstrap.font);
 			setFont(Font.createFont(Font.TRUETYPE_FONT, fontData).deriveFont(Font.PLAIN, 12));
 		} catch (FontFormatException | IOException e) {
-			GOLog.warn("Font not loaded");
-			e.printStackTrace();
+			Log.warn("Font not loaded");
+			Log.stackTrace(e);
 		}
 	}
 }

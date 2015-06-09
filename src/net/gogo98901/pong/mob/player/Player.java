@@ -3,11 +3,11 @@ package net.gogo98901.pong.mob.player;
 import java.awt.Color;
 import java.awt.Graphics;
 
+import net.gogo98901.log.Log;
 import net.gogo98901.pong.Pong;
 import net.gogo98901.pong.handler.Keyboard;
 import net.gogo98901.pong.mob.Mob;
 import net.gogo98901.util.Data;
-import net.gogo98901.util.GOLog;
 
 public class Player extends Mob {
 
@@ -32,7 +32,7 @@ public class Player extends Mob {
 		super(pong);
 		key = pong.handler.keyboard;
 		if (set == null) {
-			GOLog.severe("keySet not set");
+			Log.severe("keySet not set");
 			return;
 		}
 		this.set = set;

@@ -13,11 +13,11 @@ import java.io.InputStream;
 import javax.swing.JOptionPane;
 
 import net.gogo98901.Bootstrap;
+import net.gogo98901.log.Log;
 import net.gogo98901.pong.handler.Handler;
 import net.gogo98901.pong.mob.Ball;
 import net.gogo98901.pong.mob.player.Players;
 import net.gogo98901.util.Data;
-import net.gogo98901.util.GOLog;
 
 public class Pong extends Canvas implements Runnable {
 	private static final long serialVersionUID = 1L;
@@ -48,8 +48,8 @@ public class Pong extends Canvas implements Runnable {
 			InputStream fontData = Pong.class.getClassLoader().getResourceAsStream(Bootstrap.font);
 			font = Font.createFont(Font.TRUETYPE_FONT, fontData).deriveFont(Font.PLAIN, 24);
 		} catch (FontFormatException | IOException e) {
-			GOLog.warn("Font not loaded");
-			e.printStackTrace();
+			Log.warn("Font not loaded");
+			Log.stackTrace(e);
 		}
 	}
 
@@ -58,7 +58,7 @@ public class Pong extends Canvas implements Runnable {
 		players = new Players(pong);
 		ball = new Ball(pong);
 		sound = new Sound(pong);
-		GOLog.info("Initialized Pong");
+		Log.info("Initialized Pong");
 	}
 
 	public void setData(int players, int maxRounds) {
@@ -68,7 +68,7 @@ public class Pong extends Canvas implements Runnable {
 
 	public void start() {
 		init();
-		GOLog.info("Starting Thread");
+		Log.info("Starting Thread");
 		requestFocus();
 		requestFocusInWindow();
 
@@ -79,7 +79,7 @@ public class Pong extends Canvas implements Runnable {
 
 	public void stop() {
 		if (running) {
-			GOLog.warn("Stoping Thread");
+			Log.warn("Stoping Thread");
 			running = false;
 			try {
 				_t.join();
@@ -238,7 +238,7 @@ public class Pong extends Canvas implements Runnable {
 	}
 
 	public static void close() {
-		GOLog.off("Shutting down Pong");
+		Log.info("Shutting down Pong");
 		System.exit(0);
 	}
 }

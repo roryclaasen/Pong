@@ -2,16 +2,17 @@ package net.gogo98901;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.util.logging.Level;
 
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.JLayeredPane;
 
+import net.gogo98901.log.Log;
 import net.gogo98901.pong.Pong;
 import net.gogo98901.pong.handler.Handler;
 import net.gogo98901.pong.page.Start;
 import net.gogo98901.util.Data;
-import net.gogo98901.util.GOLog;
 
 public class Bootstrap {
 	private static JFrame frame;
@@ -26,8 +27,7 @@ public class Bootstrap {
 	public static final String font = "assets/ARCADECLASSIC.TTF";
 
 	public static void main(String[] args) {
-		GOLog.init();
-		GOLog.info("Program Started");
+		Log.info("Program Started");
 		Data.setDefultLookAndFeel();
 		arguments = args;
 		checkArgs(arguments, false);
@@ -53,8 +53,8 @@ public class Bootstrap {
 			pong.setVisible(false);
 			frame.setVisible(true);
 		} catch (Exception e) {
-			GOLog.severe(e);
-			e.printStackTrace();
+			Log.severe(e);
+			Log.stackTrace(Level.SEVERE, e);
 		}
 	}
 

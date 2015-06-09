@@ -1,6 +1,7 @@
 package net.gogo98901.pong;
 
 import java.io.IOException;
+import java.util.logging.Level;
 
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
@@ -9,7 +10,7 @@ import javax.sound.sampled.FloatControl;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
-import net.gogo98901.util.GOLog;
+import net.gogo98901.log.Log;
 
 public class Sound {
 	private String impact1 = "assets/impact1.wav";
@@ -47,8 +48,8 @@ public class Sound {
 				background2 = AudioSystem.getClip();
 				success = true;
 			} catch (Exception e) {
-				GOLog.severe(e);
-				e.printStackTrace();
+				Log.severe(e);
+				Log.stackTrace(Level.SEVERE, e);
 			}
 		}
 	}
@@ -61,7 +62,7 @@ public class Sound {
 				background1.open(intro);
 				background1.start();
 			} catch (Exception e) {
-				GOLog.severe("Background: " + e);
+				Log.severe("Background: " + e);
 			}
 		}
 	}
@@ -75,7 +76,8 @@ public class Sound {
 				background2.open(main);
 				background2.loop(-1);
 			} catch (Exception e) {
-				GOLog.severe("Background: " + e);
+				Log.severe("Background: " + e);
+				Log.stackTrace(e);
 			}
 		}
 	}
@@ -94,8 +96,8 @@ public class Sound {
 						gainControl.setValue(gain);
 					}
 				} catch (Exception e) {
-					e.printStackTrace();
-					GOLog.severe("Background: " + e);
+					Log.severe("Background: " + e);
+					Log.stackTrace(e);
 				}
 			}
 		}
@@ -134,10 +136,10 @@ public class Sound {
 						}
 						lastplayed = id;
 					} catch (Exception e) {
-						GOLog.severe(e);
+						Log.stackTrace(Level.SEVERE, e);
 					}
-				} else GOLog.severe("Invlaid sound id");
-			} else GOLog.severe("System failed");
+				} else Log.severe("Invlaid sound id");
+			} else Log.severe("System failed");
 		}
 	}
 
